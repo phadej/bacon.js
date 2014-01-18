@@ -45,7 +45,7 @@ renderElement = (element) ->
     when "subsubsection"
       '### ' + element.name
     when "fn"
-      common.functionAnchor(element.signature) + "\n`" + renderSignature(element.signature) + "` " + element.content
+      common.functionAnchor(element.signature) + "\n[`" + renderSignature(element.signature) + '`](#' + element.anchorName + ' "' + element.signature + '") ' + element.content
     when "logo"
       """<img src="https://raw.github.com/baconjs/bacon.js/master/logo.png" align="right" width="300px" />"""
     else
