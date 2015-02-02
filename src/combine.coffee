@@ -59,4 +59,5 @@ Bacon.Observable :: combine = (other, f) ->
       .map (values) ->
         combinator(values[0], values[1]))
 
-Bacon.Observable :: decode = (cases) -> withDescription(this, "decode", cases, @combine(Bacon.combineTemplate(cases), (key, values) -> values[key]))
+Bacon.Observable :: decode = (cases) ->
+  withDescription(this, "decode", cases, @combine(Bacon.combineTemplate(cases), (key, values) -> values[key]))

@@ -3386,6 +3386,44 @@ describe "Exceptions", ->
     b.push("after exception")
     expect(values).to.deep.equal(["after exception"])
 
+describe "loop", ->
+  f = (stream) ->
+    stream.flatMap (value) ->
+      if (value == 0)
+        Bacon.never()
+      else
+        Bacon.fromArray([0 .. value - 1])
+
+  expectedValues = [0, 0, 0, 0, 1, 1, 2, 3]
+
+  it "makes a loop in the event flow graph", ->
+    bus = new Bacon.Bus()
+
+    output = bus.loop f
+
+    values = []    
+    output.onValue (x) -> values.push(x)
+
+    bus.push(3)
+
+    # Exact ordering is not specified, some values come before others (as loop produces them)
+    values.sort()
+    expect(values).to.deep.equal(expectedValues)
+
+  it "semantics", ->
+    bus = new Bacon.Bus()
+
+    # Four is enough for this scenario
+    output = Bacon.mergeAll(bus, f(bus), f(f(bus)), f(f(f(bus))), f(f(f(f(bus)))))
+
+    values = []    
+    output.onValue (x) -> values.push(x)
+
+    bus.push(3)
+
+    # Exact ordering is not specified, some values come before others (as loop produces them)
+    values.sort()
+    expect(values).to.deep.equal(expectedValues)
 
 endlessly = (values...) ->
   index = 0

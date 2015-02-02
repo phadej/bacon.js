@@ -981,6 +981,15 @@ EventStream with the given initial value that will be used as the current value 
 the first value comes from the stream.
 """
 
+doc.fn "stream.loop(@ : EventStream[A], f: EventStream[A] -> EventStream[A]): EventStream[A]", """
+creates a loop in event flow graph. Semantically:
+```js
+stream.loop(f) === Bacon.mergeAll(stream, f(stream), f(f(stream)), ...)
+```
+
+Note: be careful with synchronous loops.
+"""
+
 doc.subsection "Property"
 
 doc.fn "Bacon.Property", """

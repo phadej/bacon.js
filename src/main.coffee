@@ -21,6 +21,7 @@
 # build-dependencies: holdwhen
 # build-dependencies: jquery
 # build-dependencies: log
+# build-dependencies: loop
 # build-dependencies: maperror
 # build-dependencies: mapend
 # build-dependencies: merge

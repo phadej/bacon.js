@@ -939,6 +939,14 @@ always have a current value.
 EventStream with the given initial value that will be used as the current value until
 the first value comes from the stream.
 
+<a name="stream-loop"></a>
+[`stream.loop(f)`](#stream-loop "stream.loop(@ : EventStream[A], f: EventStream[A] -> EventStream[A]): EventStream[A]") creates a loop in event flow graph. Semantically:
+```js
+stream.loop(f) === Bacon.mergeAll(stream, f(stream), f(f(stream)), ...)
+```
+
+Note: be careful with synchronous loops.
+
 Property
 --------
 
